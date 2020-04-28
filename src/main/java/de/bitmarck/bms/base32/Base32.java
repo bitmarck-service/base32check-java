@@ -90,8 +90,8 @@ public class Base32 {
                 padding += 1;
             } else if (!alphabet.ignore(c)) {
                 if (padding > 0) {
-                    throw new RuntimeException(
-                            "Unexpected character '$c' at index $idx after padding character; only '=' and whitespace characters allowed after first padding character"
+                    throw new IllegalArgumentException(
+                            "Unexpected character '" + c + "' at index " + idx + " after padding character; only '=' and whitespace characters allowed after first padding character"
                     );
                 }
 
@@ -99,7 +99,7 @@ public class Base32 {
                 try {
                     index = alphabet.toIndex(c);
                 } catch (IllegalArgumentException e) {
-                    throw new RuntimeException("Invalid base 32 character '$c' at index $idx");
+                    throw new IllegalArgumentException("Invalid base 32 character '" + c + "' at index " + idx);
                 }
 
                 buffer |= (index << (8 - bitsPerChar) >>> bidx) & 0xFF;
@@ -120,12 +120,13 @@ public class Base32 {
         }
 
         acc.flip();
-        byte[] bytes = acc.array();
+        byte[] bytes = new byte[acc.remaining()];
+        acc.get(bytes);
 
         int expectedPadding = (((bytes.length + bitsPerChar - 1) / bitsPerChar * bitsPerChar) - bytes.length) * 8 / bitsPerChar;
         if (padding != 0 && padding != expectedPadding) {
-            throw new RuntimeException(
-                    "Malformed padding - final quantum may optionally be padded with one or two padding characters such that the quantum is completed"
+            throw new IllegalArgumentException(
+                    "Malformed padding - optionally expected " + expectedPadding + " padding characters such that the quantum is completed"
             );
         }
 

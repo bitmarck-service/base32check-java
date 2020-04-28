@@ -16,7 +16,7 @@ public class Base32Check1 {
             0x11, //bin"10001",
             0x08, //bin"01000",
             0x05, //bin"00101",
-            0x03, //bin"00011"
+            0x03, //bin"00011",
     });
 
     public static Base32Check1 getInstance() {
