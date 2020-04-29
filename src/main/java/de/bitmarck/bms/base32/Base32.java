@@ -33,8 +33,6 @@ public class Base32 {
 
     /**
      * Converts the contents of this vector to a base 32 string using the specified alphabet.
-     *
-     * @group conversions
      */
     public static String encode(byte[] bytes, Base32Alphabet alphabet) {
         int bitsPerChar = 5;
@@ -72,8 +70,6 @@ public class Base32 {
      * Constructs a `ByteVector` from a base 32 string or returns an error message if the string is not valid base 32.
      * An empty input string results in an empty ByteVector.
      * The string may contain whitespace characters and hyphens which are ignored.
-     *
-     * @group base
      */
     public static byte[] decode(String str, Base32Alphabet alphabet) {
         int bitsPerChar = 5;
