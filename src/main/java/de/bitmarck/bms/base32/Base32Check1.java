@@ -23,6 +23,35 @@ public class Base32Check1 {
         return instance;
     }
 
+    public boolean validate(String payload) {
+        return validate(payload, Base32RFC4648.getInstance());
+    }
+
+    public boolean validate(String payload, Base32Alphabet alphabet) {
+        return compute(payload, alphabet) == alphabet.toChar(0);
+    }
+
+    public char compute(String payload) {
+        return compute(payload, Base32RFC4648.getInstance());
+    }
+
+    public char compute(String payload, Base32Alphabet alphabet) {
+        final int len = payload.length();
+
+        int sum = 0;
+        for (int i = 0; i < len; i++) {
+            int value = alphabet.toIndex(payload.charAt(i));
+            sum ^= matMul(new int[]{value}, primitivePowers[(i + 1) % (cardinal - 1)])[0];
+        }
+
+        int exp = (cardinal - len - 2) % (cardinal - 1);
+        if (exp < 0) {
+            exp += cardinal - 1;
+        }
+
+        return alphabet.toChar(matMul(new int[]{sum}, primitivePowers[exp])[0]);
+    }
+
     private static int[][] getPrimitivePowers(int[] primitive) {
         int[][] primitivePowers = new int[cardinal - 1][];
 
@@ -53,34 +82,5 @@ public class Base32Check1 {
         }
 
         return mat;
-    }
-
-    public char compute(String payload) {
-        return compute(payload, Base32RFC4648.getInstance());
-    }
-
-    public char compute(String payload, Base32Alphabet alphabet) {
-        final int len = payload.length();
-
-        int sum = 0;
-        for (int i = 0; i < len; i++) {
-            int value = alphabet.toIndex(payload.charAt(i));
-            sum ^= matMul(new int[]{value}, primitivePowers[(i + 1) % (cardinal - 1)])[0];
-        }
-
-        int exp = (cardinal - len - 2) % (cardinal - 1);
-        if (exp < 0) {
-            exp += cardinal - 1;
-        }
-
-        return alphabet.toChar(matMul(new int[]{sum}, primitivePowers[exp])[0]);
-    }
-
-    public boolean validate(String payload) {
-        return validate(payload, Base32RFC4648.getInstance());
-    }
-
-    public boolean validate(String payload, Base32Alphabet alphabet) {
-        return compute(payload, alphabet) == 'A';
     }
 }
