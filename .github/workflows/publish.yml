@@ -15,7 +15,15 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Import PGP key
+        env:
+          PGP_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY }}
+        run: gpg --import <(echo "$PGP_PRIVATE_KEY")
+      - name: List PGP keys
+        run: gpg --list-keys
       - name: Publish
         env:
           CI_VERSION: ${{ github.ref }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: sbt "; publishSigned; sonatypeBundleRelease"
