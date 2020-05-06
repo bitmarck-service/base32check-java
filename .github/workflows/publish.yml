@@ -18,4 +18,4 @@ jobs:
       - name: Publish
         env:
           CI_VERSION: ${{ github.ref }}
-        run: sbt publishLocal
+        run: sbt "; publishSigned; sonatypeBundleRelease"
