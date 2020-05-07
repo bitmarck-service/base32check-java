@@ -1,6 +1,11 @@
 organization := "de.bitmarck.bms"
 name := "base32check-java"
-version := "0.0.1"
+version := "0.0.2-SNAPSHOT"
+
+javacOptions ++= Seq(
+  "-source", "1.8",
+  "-target", "1.8"
+)
 
 scalaVersion := "2.13.1"
 crossPaths := false
