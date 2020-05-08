@@ -4,7 +4,7 @@
 [![Apache License 2.0](https://img.shields.io/github/license/bitmarck-service/base32check-scala.svg?maxAge=3600)](https://www.apache.org/licenses/LICENSE-2.0)
 
 This project is a Java implementation of [base32](https://en.wikipedia.org/wiki/Base32) as specified in [RFC 4648](https://tools.ietf.org/html/rfc4648#section-6) and the [base32check1](https://base32check.org/) algorithm.
-For more information about base32check see https://base32check.org/.
+For more information see https://base32check.org.
 
 Licensing
 ---------
