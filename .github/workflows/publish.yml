@@ -19,8 +19,6 @@ jobs:
         env:
           PGP_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY }}
         run: gpg --import <(echo "$PGP_PRIVATE_KEY")
-      - name: List PGP keys
-        run: gpg --list-keys
       - name: Publish
         env:
           CI_VERSION: ${{ github.ref }}
