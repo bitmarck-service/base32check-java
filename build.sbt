@@ -23,7 +23,7 @@ developers := List(
   Developer(id = "u016595", name = "Pierre Kisters", email = "pierre.kisters@bitmarck.de", url = url("https://github.com/LolHens/"))
 )
 
-libraryDependencies += "org.scalatestplus" %% "scalacheck-1-14" % "3.1.1.1" % Test
+libraryDependencies += "org.scalatestplus" %% "scalacheck-1-14" % "3.1.3.0" % Test
 
 
 Compile / doc / sources := Seq.empty
