@@ -24,7 +24,7 @@ developers := List(
 )
 
 libraryDependencies ++= Seq(
-  "org.scalatestplus" %% "scalacheck-1-14" % "3.2.1.0" % Test,
+  "org.scalatestplus" %% "scalacheck-1-14" % "3.2.2.0" % Test,
   "org.scalatest" %% "scalatest" % "3.2.2" % Test,
 )
 
