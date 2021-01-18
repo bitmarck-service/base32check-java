@@ -7,7 +7,8 @@ javacOptions ++= Seq(
   "-target", "1.8"
 )
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.4"
+autoScalaLibrary := false
 crossPaths := false
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
