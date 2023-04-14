@@ -21,7 +21,7 @@ scmInfo := Some(
   )
 )
 developers := List(
-  Developer(id = "u016595", name = "Pierre Kisters", email = "pierre.kisters@bitmarck.de", url = url("https://github.com/LolHens/"))
+  Developer(id = "u016595", name = "Pierre Kisters", email = "pierre.kisters@bitmarck.de", url = url("https://github.com/lhns/"))
 )
 
 libraryDependencies ++= Seq(
