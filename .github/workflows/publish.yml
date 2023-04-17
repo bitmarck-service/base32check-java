@@ -2,7 +2,7 @@ name: publish
 
 on:
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
   publish:
@@ -11,17 +11,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+
+      - uses: actions/setup-java@v3.11.0
         with:
-          distribution: 'adopt'
-          java-version: '8'
-      - name: Import PGP key
-        env:
-          PGP_PRIVATE_KEY: ${{ secrets.PGP_PRIVATE_KEY }}
-        run: gpg --import <(echo "$PGP_PRIVATE_KEY")
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'sbt'
+          gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
+
       - name: Publish
         env:
           CI_VERSION: ${{ github.ref }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-        run: sbt "; test; publishSigned; sonatypeBundleRelease"
+          SBT_OPTS: '-Xmx2G'
+        run: |
+          sbt "; test; sonatypeBundleClean; publishSigned; sonatypeBundleRelease"
