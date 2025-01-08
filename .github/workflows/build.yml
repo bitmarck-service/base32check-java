@@ -1,0 +1,48 @@
+name: build
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '*.*'
+  pull_request:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4.6.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'sbt'
+      - uses: sbt/setup-sbt@v1
+      - name: Test
+        env:
+          CI_VERSION: ${{ github.ref }}
+          SBT_OPTS: '-Xmx2G'
+        run: sbt "; test"
+      - name: Publish
+        env:
+          CI_VERSION: ${{ github.ref }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SBT_OPTS: '-Xmx2G'
+        if: github.event_name == 'release'
+        run: |
+          sbt "; sonatypeBundleClean; publishSigned; sonatypeBundleRelease"
+  dependency-graph:
+    name: Update Dependency Graph
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: sbt/setup-sbt@v1
+      - uses: scalacenter/sbt-dependency-submission@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: env.GITHUB_TOKEN && github.event_name != 'pull_request'
