@@ -6,7 +6,7 @@ ThisBuild / organization := "de.bitmarck.bms"
 name := (root / name).value
 
 val V = new {
-  val logbackClassic = "1.5.16"
+  val logbackClassic = "1.5.17"
   val munit = "1.0.1"
 }
 
