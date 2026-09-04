@@ -7,7 +7,7 @@ name := (root / name).value
 
 val V = new {
   val logbackClassic = "1.5.18"
-  val munit = "1.0.4"
+  val munit = "1.3.6"
 }
 
 lazy val commonSettings: SettingsDefinition = Def.settings(
